@@ -1,0 +1,74 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Button1: TButton;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    Edit5: TEdit;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  lx,ly,maiorlado,menorlado,cargaAlage,cargaBlage, espessuralaje, densidadeconcreto,
+  densidadealvenaria:real;
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+ lx:=0; ly:=0;
+ densidadeconcreto:=2500;
+ densidadealvenaria:=1120;
+lx:=StrToFloat(edit1.Text);
+ly:=StrToFloat(edit2.Text);
+if (lx>=ly) then
+  begin
+  maiorlado:=lx;
+  menorlado:=ly;
+  end;
+  //condionamento de verificação da area da lage sobre influencia da viga
+if (ly>lx) then
+  begin
+  maiorlado:=ly;
+  menorlado:=lx;
+  end;
+ if (maiorlado>2*menorlado) then
+ begin
+ cargaAlage:=maiorlado*(menorlado/2);
+ edit3.Text:=FloatToStr(cargaAlage);
+ end;
+ if (maiorlado<=2*menorlado) then
+ begin
+   cargaAlage:=(((maiorlado-menorlado)+maiorlado)*(menorlado/2))/2;
+   edit3.Text:=FloatToStr(cargaAlage);
+   cargaBlage:=((menorlado)*(menorlado/2))/2;
+   edit4.Text:=FloatToStr(cargaBlage);
+ end;
+end;
+
+end.
